@@ -8,7 +8,7 @@
 #define ALARM_BEEP_MS  80U    /* 报警模式单次蜂鸣时长 */
 #define IDLE_MS        10U    /* 待机空转 */
 
-static sys_mode_t work_mode     = SYS_RUN;  /* 上电默认运行模式 */
+static sys_mode_t work_mode     = SYS_STANDBY;  /* 上电默认待机模式 */
 static uint8_t    s_current_led = 1U;
 static uint16_t   s_blink_times = ALARM_BLINK_TIMES;
 static uint32_t   s_delay_ms    = ALARM_DELAY_MS;
@@ -22,6 +22,7 @@ void alarm_sys_set_mode(sys_mode_t mode) { work_mode = mode; }
 sys_mode_t alarm_sys_get_mode(void)      { return work_mode; }
 
 /* 主循环唯一入口：按当前模式执行 */
+
 void alarm_sys_func(void)
 {
    
