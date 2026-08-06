@@ -34,11 +34,10 @@
  * 本工程已经把 hardware/src/buzzer.c 和 led.c 加进 Keil 工程的 hardware 分组，
  * 并把 hardware/inc 加进 Include Paths，所以这里可以直接包含并使用。
  */
-#include "buzzer.h"   /* 蜂鸣器驱动的函数声明 */
-#include "led.h"      /* LED 驱动的函数声明 */
+#include "alarm_sys.h"    /* 报警系统头文件 */
 
-#include "user_beep.h"
-
+#include "user_beep.h"    /* 上电提示音声明 */
+#include "buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,11 +47,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-/* #define 是宏定义：编译前会把名字替换成后面的内容 */
-#define LED_COUNT   4U    /* 板载 LED 数量，U 表示 unsigned 无符号数 */
-#define BLINK_TIMES 1U    /* 每颗 LED 闪烁次数 */
-#define DELAY_MS    300U  /* LED 亮/灭持续时间，单位毫秒 */
-#define BEEP_MS     300U  /* 蜂鸣器响一声的时长 */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -70,14 +64,12 @@
 void SystemClock_Config(void);
 static void MPU_Config(void);
 /* USER CODE BEGIN PFP */
-/* 函数声明（原型）：告诉编译器函数名、参数和返回值，定义在下方 USER CODE 4 */
-void blink_led(uint8_t led_num, uint16_t times, uint32_t delay_ms);
-void beep(uint32_t beep_ms);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-__weak void user_beep(){}
+
 /* USER CODE END 0 */
 
 /**
@@ -89,10 +81,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
   /* 局部变量：只能在 main 函数内使用 */
-  uint8_t  current_led = 1U;              /* 当前要操作的 LED 编号 */
-  uint16_t blink_times = BLINK_TIMES;/* 每颗 LED 闪烁次数 */
-  uint32_t delay_ms    = DELAY_MS;   /* 亮/灭延时 */
-  const uint8_t led_count = LED_COUNT; /* const 表示该变量不允许修改 */
+
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
@@ -118,7 +107,7 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   buzzer_init(); /* 让蜂鸣器引脚先处于关闭状态 */
-  user_beep();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,28 +117,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    current_led = 1U; /* 练习点：改成 2U，观察从哪颗 LED 开始 */
-    blink_times = BLINK_TIMES;
-    /* while 循环：条件成立就反复执行 {} 里的代码 */
-    while (current_led <= led_count)
-    {
-      blink_led(current_led, blink_times, delay_ms);
-      current_led++; /* 等价于 current_led = current_led + 1 */
-      blink_times += 1U; /* 每颗 LED 闪烁次数增加 1 次 */
-    }
-
-     /*此处删掉了beep(BEEP_MS)的调用*/
-
-    /* if / else 判断：让延时每次变快一点，到 100 后重新回到初始值 */
-    if (delay_ms > 100U)
-    {
-      delay_ms += 20U; /* 练习点：改成 += 20U 看速度变化方向 */
-    }
-    else
-    {
-      delay_ms = DELAY_MS;
-    }
-  }
+   alarm_sys_func();
   /* USER CODE END 3 */
 }
 
@@ -214,32 +182,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /* 函数定义：这里才是函数的具体实现 */
-void blink_led(uint8_t led_num, uint16_t times, uint32_t delay_ms)
-{
-  uint16_t i = 0U; /* 循环计数变量 */
-
-  /* if 判断：LED 编号只允许 1~4 */
-  if (led_num > LED_COUNT)
-  {
-    return; /* return 直接结束当前函数 */
-  }
-
-  /* for 循环：初始化; 判断条件; 每次循环后执行 */
-  for (i = 0U; i < times; i++)
-  {
-    led_on(led_num);          /* 点亮指定 LED */
-    HAL_Delay(delay_ms);      /* 延时一段时间 */
-    led_off(led_num);         /* 熄灭指定 LED */
-    HAL_Delay(delay_ms);
-  }
-}
-
-void beep(uint32_t beep_ms)
-{
-  buzzer_on();          /* 打开蜂鸣器 */
-  HAL_Delay(beep_ms);   /* 保持响一段时间 */
-  buzzer_off();         /* 关闭蜂鸣器 */
-}
+ 
 /* USER CODE END 4 */
 
  /* MPU Configuration */
