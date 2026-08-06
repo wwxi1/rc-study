@@ -52,7 +52,7 @@
 #define LED_COUNT   4U    /* 板载 LED 数量，U 表示 unsigned 无符号数 */
 #define BLINK_TIMES 5U    /* 每颗 LED 闪烁次数 */
 #define DELAY_MS    500U  /* LED 亮/灭持续时间，单位毫秒 */
-#define BEEP_MS     120U  /* 蜂鸣器响一声的时长 */
+#define BEEP_MS     300U  /* 蜂鸣器响一声的时长 */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
