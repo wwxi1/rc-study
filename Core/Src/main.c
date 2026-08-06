@@ -129,7 +129,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     current_led = 1U; /* 练习点：改成 2U，观察从哪颗 LED 开始 */
-
+    blink_times = BLINK_TIMES;
     /* while 循环：条件成立就反复执行 {} 里的代码 */
     while (current_led <= led_count)
     {
@@ -138,7 +138,7 @@ int main(void)
       blink_times += 1U; /* 每颗 LED 闪烁次数增加 1 次 */
     }
 
-     /*此处删掉了beep(BEEP_MS)的调用
+     /*此处删掉了beep(BEEP_MS)的调用*/
 
     /* if / else 判断：让延时每次变快一点，到 100 后重新回到初始值 */
     if (delay_ms > 100U)
