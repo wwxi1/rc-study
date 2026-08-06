@@ -118,7 +118,10 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
    alarm_sys_func();
+
+  }
   /* USER CODE END 3 */
+
 }
 
 /**
