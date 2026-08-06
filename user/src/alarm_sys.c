@@ -3,7 +3,7 @@
 #include "buzzer.h"
 #include "stm32h7xx_hal.h"
 
-#define MODE_HOLD_MS   5000U  /* 演示用：每 8s 自动换模式 */
+#define MODE_HOLD_MS   10000U  /* 演示用：每 8s 自动换模式 */
 #define ALARM_SPEED_MS 50U    /* 报警模式流水速度 */
 #define ALARM_BEEP_MS  80U    /* 报警模式单次蜂鸣时长 */
 #define IDLE_MS        10U    /* 待机空转 */
