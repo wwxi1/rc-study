@@ -137,7 +137,7 @@ int main(void)
       current_led++; /* 等价于 current_led = current_led + 1 */
     }
 
-    beep(BEEP_MS);
+     /*此处删掉了beep(BEEP_MS)的调用
 
     /* if / else 判断：让延时每次变快一点，到 100 后重新回到初始值 */
     if (delay_ms > 100U)
